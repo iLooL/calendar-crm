@@ -1,35 +1,152 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import {
+  Container,
+  TextField,
+  Typography,
+  Button,
+  Grid,
+  MenuItem,
+} from "@mui/material";
 
-function App() {
-  const [count, setCount] = useState(0)
+type AppointmentFormData = {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  preferredDateTime: string;
+  meetingType: string;
+  companyName: string;
+  notes: string;
+};
+
+const initialFormData: AppointmentFormData = {
+  name: "",
+  email: "",
+  phoneNumber: "",
+  preferredDateTime: "",
+  meetingType: "",
+  companyName: "",
+  notes: "",
+};
+
+const meetingTypes = ["Speed Skating", "Slow Skating", "ballerina skating"];
+
+const AppointmentForm: React.FC = () => {
+  const [formData, setFormData] = useState<AppointmentFormData>(initialFormData);
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    console.log('name: ', name)
+    console.log('value: ', value)
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("Form data submitted:", formData);
+    setFormData(initialFormData);
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
-
-export default App
+    <Container maxWidth="xs">
+      <Typography variant="h4" align="center">
+        Book with Randy
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              required
+              name="name"
+              label="Name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              required
+              name="email"
+              label="Email Address"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              required
+              name="phoneNumber"
+              label="Phone Number"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              required
+              name="preferredDateTime"
+              label="Preferred Date and Time"
+              type="datetime-local"
+              value={formData.preferredDateTime}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              required
+              select
+              name="meetingType"
+              label="Meeting Type"
+              value={formData.meetingType}
+              onChange={handleChange}
+            >
+              {meetingTypes.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              name="companyName"
+              label="Company Name"
+              value={formData.companyName}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              multiline
+              rows={4}
+              name="notes"
+              label="Message or Notes"
+              value={formData.notes}
+              onChange={
+                handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button fullWidth variant="contained" color="primary" type="submit">
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Container>
+      );
+    };
+    
+export default AppointmentForm;
