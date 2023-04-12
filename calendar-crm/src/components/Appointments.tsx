@@ -7,6 +7,7 @@ const Appointments: React.FC = () => {
     <>
       <div>Appointments</div>
       <Button 
+        variant="contained"
         sx={{ ml: 'auto' }} 
         color="inherit" 
         component={Link} 
