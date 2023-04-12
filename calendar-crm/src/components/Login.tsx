@@ -10,14 +10,32 @@ declare global {
   }
 
   interface user {
-    access_token: any
+      "access_token": any,
+      "token_type": any,
+      "expires_in": any,
+      "scope": any,
+      "authuser": any,
+      "prompt": any
+    
   }
 
-  interface rofile {
+  interface profile {
     picture: any,
     name: any,
     email: any
   }
+
+  interface profile {
+    "id": any,
+    "email": any,
+    "verified_email": any,
+    "name": any,
+    "given_name": any,
+    "family_name": any,
+    "picture": any,
+    "locale": any
+}
+
 }
 
 const icon = {
@@ -47,11 +65,14 @@ const button = {
 
 const Login: React.FC = () => {
 
-  const [user, setUser] = useState<user | (() => user)>('');
-    const [profile, setProfile] = useState<profile>('');
+  const [user, setUser] = useState<user | null>(null);
+  const [profile, setProfile] = useState<profile | null>(null);
 
     const login = useGoogleLogin({
-        onSuccess: (codeResponse: any) => setUser(codeResponse),
+        onSuccess: (codeResponse: any) => {
+          console.log(codeResponse);
+          setUser(codeResponse)
+        },
         onError: (error: any) => console.log('Login Failed:', error)
     });
 
@@ -66,6 +87,7 @@ const Login: React.FC = () => {
                         }
                     })
                     .then((res) => {
+                      console.log(res.data)
                         setProfile(res.data);
                     })
                     .catch((err) => console.log(err));
