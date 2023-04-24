@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Avatar, Typography, Box } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
@@ -103,24 +103,53 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div>
-            <h2>React Google Login</h2>
-            <br />
-            <br />
-            {profile ? (
-                <div>
-                    <img src={profile.picture} alt="user image" />
-                    <h3>User Logged in</h3>
-                    <p>Name: {profile.name}</p>
-                    <p>Email Address: {profile.email}</p>
-                    <br />
-                    <br />
-                    <button onClick={logOut}>Log out</button>
-                </div>
-            ) : (
-                <button onClick={() => login()}>Sign in with Google 🚀 </button>
-            )}
-        </div>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="h4">React Google Login</Typography>
+        <br />
+        {profile ? (
+          <Box>
+            <Avatar
+              alt="user image"
+              src={profile.picture}
+              sx={{
+                width: (theme) => theme.spacing(7),
+                height: (theme) => theme.spacing(7),
+                marginBottom: (theme) => theme.spacing(2),
+              }}
+            />
+            <Typography variant="h5">User Logged in</Typography>
+            <Typography>Name: {profile.name}</Typography>
+            <Typography>Email Address: {profile.email}</Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={logOut}
+              sx={{
+                marginTop: (theme) => theme.spacing(2),
+              }}
+            >
+              Log out
+            </Button>
+          </Box>
+        ) : (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => login()}
+            sx={{
+              marginTop: (theme) => theme.spacing(2),
+            }}
+          >
+            Sign in with Google 🚀
+          </Button>
+        )}
+      </Box>
     );
 };
 
