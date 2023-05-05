@@ -21,7 +21,7 @@ declare global {
       "scope": any,
       "authuser": any,
       "prompt": any
-    
+     
   }
 
   interface profile {
