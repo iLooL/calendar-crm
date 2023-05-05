@@ -84,7 +84,7 @@ const Login: React.FC = () => {
       setProfile(null);
       dispatch(setAuthenticated(false));
   };
-
+ 
     const handleLogin = () => {
       login();
     }
