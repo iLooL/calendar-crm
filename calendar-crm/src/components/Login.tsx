@@ -67,7 +67,7 @@ const Login: React.FC = () => {
   const [user, setUser] = useState<user | null>(null);
   const [profile, setProfile] = useState<profile | null>(null);
   const dispatch = useAppDispatch();
-  const isAuthenticated =  useAppSelector((state: RootState) => state.auth.isAuthenticated);
+  const isAuthenticated =  useAppSelector((state: any) => state.auth.isAuthenticated);
   console.log(profile);
     const login = useGoogleLogin({
         onSuccess: (codeResponse: any) => {
