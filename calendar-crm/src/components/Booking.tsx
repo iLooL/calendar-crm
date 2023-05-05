@@ -54,7 +54,7 @@ const Booking: React.FC = () => {
       Book with Randy
     </Typography>
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={3}>
+      <Grid container sx={{maxWidth: '50%', mx: 'auto'}}spacing={3}>
         <Grid item xs={12}>
           <TextField
             fullWidth

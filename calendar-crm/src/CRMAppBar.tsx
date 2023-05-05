@@ -10,9 +10,10 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from './redux/hooks';
 
 const CRMAppBar: React.FC = () => {
-  // const classes = useStyles();
+  const isAuthenticated =  useAppSelector((state: RootState) => state.auth.isAuthenticated);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -59,7 +60,11 @@ const CRMAppBar: React.FC = () => {
           <Typography 
             variant="h6" 
             >
-            CRM-NAME
+            { isAuthenticated ? 
+              'Welcome back!'
+              :
+              ''
+            }
           </Typography>
           <Button 
             sx={{ ml: 'auto' }} 

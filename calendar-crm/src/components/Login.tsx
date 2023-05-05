@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { RootState } from '../redux';
 import { Button, Avatar, Typography, Box } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
-import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import { setAuthenticated } from '../redux/authSlice';
+
 
 declare global {
   interface Window {
@@ -57,24 +62,36 @@ const button = {
     textTransform: 'none',
 }
 
-// interface GoogleLoginProps {
-//   clientId: string;
-//   onSuccess: (response: any) => void;
-//   onFailure: (error: any) => void;
-// }
-
 const Login: React.FC = () => {
 
   const [user, setUser] = useState<user | null>(null);
   const [profile, setProfile] = useState<profile | null>(null);
-
+  const dispatch = useAppDispatch();
+  const isAuthenticated =  useAppSelector((state: RootState) => state.auth.isAuthenticated);
+  console.log(profile);
     const login = useGoogleLogin({
         onSuccess: (codeResponse: any) => {
           console.log(codeResponse);
-          setUser(codeResponse)
+          setUser(codeResponse);
+          dispatch(setAuthenticated(true));
         },
         onError: (error: any) => console.log('Login Failed:', error)
     });
+
+    // log out function to log the user out of google and set the profile array to null
+    const logOut = () => {
+      googleLogout();
+      setProfile(null);
+      dispatch(setAuthenticated(false));
+  };
+
+    const handleLogin = () => {
+      login();
+    }
+
+    const handleLogout = () => {
+      logOut();
+    }
 
     useEffect(
         () => {
@@ -95,12 +112,6 @@ const Login: React.FC = () => {
         },
         [ user ]
     );
-
-    // log out function to log the user out of google and set the profile array to null
-    const logOut = () => {
-        googleLogout();
-        setProfile(null);
-    };
 
     return (
       <Box
@@ -129,7 +140,7 @@ const Login: React.FC = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={logOut}
+              onClick={handleLogout}
               sx={{
                 marginTop: (theme) => theme.spacing(2),
               }}
@@ -141,12 +152,12 @@ const Login: React.FC = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => login()}
+            onClick={handleLogin}
             sx={{
               marginTop: (theme) => theme.spacing(2),
             }}
           >
-            Sign in with Google 🚀
+            Sign in with Google <GoogleIcon />
           </Button>
         )}
       </Box>
