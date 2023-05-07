@@ -46,7 +46,7 @@ const Booking: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Form data submitted:", formData);
-    setAppointments((prevData) => {
+    setAppointments((prevData: any) => {
       return [...prevData, formData]
     })
     setFormData(initialFormData);
@@ -145,7 +145,7 @@ const Booking: React.FC = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Button fullWidth onClick={handleSubmit} variant="contained" color="primary" type="submit">
+              <Button fullWidth onClick={() => handleSubmit} variant="contained" color="primary" type="submit">
                 Submit
               </Button>
               {/* <Button fullWidth component={Link} to="/submission" variant="contained" color="primary" type="submit">
