@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Box, Typography, Card, CardContent } from '@mui/material';
 import { useGlobalContext } from '../GlobalContext';
 
@@ -51,6 +51,7 @@ const AppointmentDetails = (appointment: any) => {
 
 
 const Appointments: React.FC = () => {
+
   const {appointments, setAppointments} = useGlobalContext();
   console.log(appointments);
 
