@@ -46,6 +46,7 @@ const Booking: React.FC = () => {
 
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   const handleSubmit = (event: any) => {
+    console.log(event);
     event.preventDefault();
     console.log("Form data submitted:", formData);
     setAppointments((prevData: any) => {
