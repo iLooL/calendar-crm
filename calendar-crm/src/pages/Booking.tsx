@@ -4,10 +4,13 @@ import {
   Button,
   Grid,
   MenuItem,
-  Typography
+  Typography,
+  Container
 } from "@mui/material";
 import { useGlobalContext } from "../GlobalContext";
 import { Link, redirect, useNavigate } from 'react-router-dom';
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
 
 type AppointmentFormData = {
   name: string;
@@ -56,15 +59,21 @@ const Booking: React.FC = () => {
     navigate('/submission');
   };
 
+  const events = [
+    { title: 'Meeting', start: new Date() }
+  ]
+
+  
+
   return (
-    <>
-    <Typography variant="h4" align="center" my={2}>
-      Book with Randy
-    </Typography>
+    <Container>
+      <Typography variant="h4" align="center" my={2}>
+        Book with Randy
+      </Typography>
     {/* <form onSubmit={handleSubmit}> */}
     <form>
-      <Grid container sx={{maxWidth: '50%', mx: 'auto'}}spacing={3}>
-        <Grid item xs={12}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
             required
@@ -96,17 +105,12 @@ const Booking: React.FC = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            required
-            name="preferredDateTime"
-            label="Preferred Date and Time"
-            type="datetime-local"
-            value={formData.preferredDateTime}
-            onChange={handleChange}
-            InputLabelProps={{
-              shrink: true,
-            }}
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView='dayGridMonth'
+            weekends={false}
+            events={events}
+            // eventContent={renderEventContent}
           />
         </Grid>
         <Grid item xs={12}>
@@ -146,18 +150,18 @@ const Booking: React.FC = () => {
             onChange={
               handleChange}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <Button fullWidth onClick={handleSubmit} variant="contained" color="primary" type="submit">
-                Submit
-              </Button>
-              {/* <Button fullWidth component={Link} to="/submission" variant="contained" color="primary" type="submit">
-                Submit
-              </Button> */}
-            </Grid>
-          </Grid>
-        </form>
-    </>
+        </Grid>
+        <Grid item xs={12}>
+          <Button fullWidth onClick={handleSubmit} variant="contained" color="primary" type="submit">
+            Submit
+          </Button>
+          {/* <Button fullWidth component={Link} to="/submission" variant="contained" color="primary" type="submit">
+            Submit
+          </Button> */}
+        </Grid>
+      </Grid>
+    </form>
+    </Container>
   )
     };  
     
