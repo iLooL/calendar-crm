@@ -83,7 +83,7 @@ const Booking: React.FC = () => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
             required
@@ -94,7 +94,7 @@ const Booking: React.FC = () => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
             required
@@ -104,16 +104,7 @@ const Booking: React.FC = () => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
-          <FullCalendar
-            plugins={[dayGridPlugin]}
-            initialView='dayGridMonth'
-            weekends={false}
-            events={events}
-            // eventContent={renderEventContent}
-          />
-        </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
             required
@@ -150,6 +141,15 @@ const Booking: React.FC = () => {
             onChange={
               handleChange}
               />
+        </Grid>
+        <Grid item xs={12}>
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView='dayGridMonth'
+            weekends={false}
+            events={events}
+            // eventContent={renderEventContent}
+          />
         </Grid>
         <Grid item xs={12}>
           <Button fullWidth onClick={handleSubmit} variant="contained" color="primary" type="submit">
