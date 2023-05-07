@@ -4,7 +4,10 @@ interface GlobalData {
   profile: any,
   setProfile: any,
   loggedIn: boolean,
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
+  appointments: any,
+  setAppointments: any,
+
 }
 
 interface GlobalProviderProps {
@@ -20,9 +23,10 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         email: ''
     });
     const [loggedIn, setLoggedIn] = useState(false);
+    const [appointments, setAppointments] = useState([]);
 
   return (
-    <GlobalContext.Provider value={{ profile, setProfile, loggedIn, setLoggedIn }}>
+    <GlobalContext.Provider value={{ profile, setProfile, loggedIn, setLoggedIn, appointments, setAppointments }}>
       {children}
     </GlobalContext.Provider>
   );

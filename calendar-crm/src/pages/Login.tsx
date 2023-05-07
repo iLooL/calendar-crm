@@ -63,19 +63,6 @@ const Login: React.FC = () => {
 
   const [user, setUser] = useState<user | null>(null);
   const { profile, setProfile, loggedIn, setLoggedIn } = useGlobalContext();
-  console.log(loggedIn);
-  console.log(profile);
-  // const [profile, setProfile] = useState<profile | null>(null);
-
-    const login = useGoogleLogin({
-        onSuccess: (codeResponse: any) => {
-          console.log(codeResponse);
-          setUser(codeResponse);
-          setLoggedIn(true);
-        },
-        onError: (error: any) => console.log('Login Failed:', error)
-    });
-
     // log out function to log the user out of google and set the profile array to null
     const logOut = () => {
       googleLogout();
@@ -90,6 +77,15 @@ const Login: React.FC = () => {
     const handleLogin = () => {
       login();
     }
+
+    const login = useGoogleLogin({
+      onSuccess: (codeResponse: any) => {
+        console.log(codeResponse);
+        setUser(codeResponse);
+        setLoggedIn(true);
+      },
+      onError: (error: any) => console.log('Login Failed:', error)
+  });
 
     const handleLogout = () => {
       logOut();

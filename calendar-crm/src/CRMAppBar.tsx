@@ -15,8 +15,6 @@ import { useGlobalContext } from './GlobalContext';
 const CRMAppBar: React.FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { profile, loggedIn } = useGlobalContext();
-  console.log(profile)
-  console.log(loggedIn)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };

@@ -6,7 +6,8 @@ import {
   MenuItem,
   Typography
 } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { useGlobalContext } from "../GlobalContext";
+import { Link, redirect } from 'react-router-dom';
 
 type AppointmentFormData = {
   name: string;
@@ -32,7 +33,7 @@ const meetingTypes = ["Speed Skating", "Slow Skating", "ballerina skating"];
 
 const Booking: React.FC = () => {
   const [formData, setFormData] = useState<AppointmentFormData>(initialFormData);
-
+  const { setAppointments } = useGlobalContext();
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -45,7 +46,11 @@ const Booking: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Form data submitted:", formData);
+    setAppointments((prevData) => {
+      return [...prevData, formData]
+    })
     setFormData(initialFormData);
+    redirect('/submission');
   };
 
   return (
@@ -53,7 +58,8 @@ const Booking: React.FC = () => {
     <Typography variant="h4" align="center" my={2}>
       Book with Randy
     </Typography>
-    <form onSubmit={handleSubmit}>
+    {/* <form onSubmit={handleSubmit}> */}
+    <form>
       <Grid container sx={{maxWidth: '50%', mx: 'auto'}}spacing={3}>
         <Grid item xs={12}>
           <TextField
@@ -139,9 +145,12 @@ const Booking: React.FC = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Button fullWidth component={Link} to="/submission" variant="contained" color="primary" type="submit">
+              <Button fullWidth onClick={handleSubmit} variant="contained" color="primary" type="submit">
                 Submit
               </Button>
+              {/* <Button fullWidth component={Link} to="/submission" variant="contained" color="primary" type="submit">
+                Submit
+              </Button> */}
             </Grid>
           </Grid>
         </form>
