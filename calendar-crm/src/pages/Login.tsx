@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
-import { useDispatch, useSelector } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { RootState } from '../redux';
 import { Button, Avatar, Typography, Box } from '@mui/material';
+import { useGlobalContext } from '../GlobalContext';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
-import { setAuthenticated } from '../redux/authSlice';
 
 
 declare global {
@@ -65,15 +62,16 @@ const button = {
 const Login: React.FC = () => {
 
   const [user, setUser] = useState<user | null>(null);
-  const [profile, setProfile] = useState<profile | null>(null);
-  const dispatch = useAppDispatch();
-  const isAuthenticated =  useAppSelector((state: any) => state.auth.isAuthenticated);
+  const { profile, setProfile, loggedIn, setLoggedIn } = useGlobalContext();
+  console.log(loggedIn);
   console.log(profile);
+  // const [profile, setProfile] = useState<profile | null>(null);
+
     const login = useGoogleLogin({
         onSuccess: (codeResponse: any) => {
           console.log(codeResponse);
           setUser(codeResponse);
-          dispatch(setAuthenticated(true));
+          setLoggedIn(true);
         },
         onError: (error: any) => console.log('Login Failed:', error)
     });
@@ -81,9 +79,13 @@ const Login: React.FC = () => {
     // log out function to log the user out of google and set the profile array to null
     const logOut = () => {
       googleLogout();
-      setProfile(null);
-      dispatch(setAuthenticated(false));
-  };
+      setProfile({
+        picture: '',
+        name: '',
+        email: ''
+      });
+      setLoggedIn(false);
+    };
  
     const handleLogin = () => {
       login();
@@ -105,7 +107,7 @@ const Login: React.FC = () => {
                     })
                     .then((res) => {
                       console.log(res.data)
-                        setProfile(res.data);
+                      setProfile(res.data);
                     })
                     .catch((err) => console.log(err));
             }
@@ -123,7 +125,7 @@ const Login: React.FC = () => {
       >
         <Typography variant="h4">React Google Login</Typography>
         <br />
-        {profile ? (
+        {profile.picture !== '' ? (
           <Box>
             <Avatar
               alt="user image"

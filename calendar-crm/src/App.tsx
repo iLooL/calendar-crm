@@ -1,21 +1,17 @@
 import React from "react";
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CRMAppBar from './CRMAppBar';
-import Booking from './components/Booking';
-import Submission from './components/Submission';
-import Dashboard from './components/Dashboard';
-import Appointments from './components/Appointments';
-import Clients from './components/Clients';
-import Settings from './components/Settings';
-import Login from './components/Login'; 
-
-import store from './redux/store';
+import Booking from './pages/Booking';
+import Submission from './pages/Submission';
+import Dashboard from './pages/Dashboard';
+import Appointments from './pages/Appointments';
+import Clients from './pages/Clients';
+import Settings from './pages/Settings';
+import Login from './pages/Login'; 
 
 const App: React.FC = () => {
 
   return (
-      <Provider store={store}>
         <Router>
           <div>
             <CRMAppBar />
@@ -30,7 +26,6 @@ const App: React.FC = () => {
             </Routes>
           </div>
         </Router>
-      </Provider>
       );
     };
     

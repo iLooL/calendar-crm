@@ -10,12 +10,13 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from './redux/hooks';
+import { useGlobalContext } from './GlobalContext';
 
 const CRMAppBar: React.FC = () => {
-  const isAuthenticated =  useAppSelector((state: RootState) => state.auth.isAuthenticated);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  const { profile, loggedIn } = useGlobalContext();
+  console.log(profile)
+  console.log(loggedIn)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -60,11 +61,11 @@ const CRMAppBar: React.FC = () => {
           <Typography 
             variant="h6" 
             >
-            { isAuthenticated ? 
-              'Welcome back!'
-              :
-              ''
-            }
+              { loggedIn ? 
+                'Welcome ' + profile.name
+                :
+                'Welcome to Calendar CRM'
+              }
           </Typography>
           <Button 
             sx={{ ml: 'auto' }} 
