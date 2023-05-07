@@ -56,7 +56,7 @@ const Booking: React.FC = () => {
       return [...prevData, formData]
     })
     setFormData(initialFormData);
-    navigate('/submission');
+    // navigate('/submission');
   };
 
   const events = [
